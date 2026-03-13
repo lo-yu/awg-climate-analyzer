@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWG Climate Suitability Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌊 AWG Climate Suitability Analyzer</h1>
+            <p>Analyze global atmospheric water generation potential</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" onclick="showTab('overview')">Overview</button>
+            <button class="tab-button" onclick="showTab('rankings')">Rankings</button>
+            <button class="tab-button" onclick="showTab('predictions')">Predictions</button>
+            <button class="tab-button" onclick="showTab('sizing')">System Sizing</button>
+        </nav>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Regions Analyzed</h3>
+                    <p class="stat-number" id="regionCount">10</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Best Region</h3>
+                    <p class="stat-text" id="bestRegion">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Avg Global Score</h3>
+                    <p class="stat-number" id="avgScore">--</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Top Score</h3>
+                    <p class="stat-number" id="topScore">--</p>
+                </div>
+            </div>
+
+            <div id="map" style="height: 400px; margin-top: 20px; border-radius: 8px; overflow: hidden;"></div>
+        </div>
+
+        <!-- Rankings Tab -->
+        <div id="rankings" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search regions..." onkeyup="filterRegions()">
+            </div>
+            <div id="rankingsList" class="rankings-list">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Predictions Tab -->
+        <div id="predictions" class="tab-content">
+            <div class="prediction-controls">
+                <h2>Seasonal Water Production Forecast</h2>
+                <select id="regionSelect" onchange="updatePredictionChart()">
+                    <option value="">Select a region...</option>
+                </select>
+            </div>
+            <canvas id="predictionChart" style="max-width: 100%; margin-top: 20px;"></canvas>
+            <div id="predictionStats" style="margin-top: 20px;"></div>
+        </div>
+
+        <!-- System Sizing Tab -->
+        <div id="sizing" class="tab-content">
+            <div class="sizing-form">
+                <h2>AWG System Sizing Calculator</h2>
+                <label for="sizingRegion">Select Region:</label>
+                <select id="sizingRegion" onchange="updateSizing()">
+                    <option value="">Select a region...</option>
+                </select>
+                
+                <label for="waterNeed">Daily Water Needed (liters):</label>
+                <input type="number" id="waterNeed" value="100" onchange="updateSizing()">
+                
+                <button onclick="calculateSizing()" class="btn-primary">Calculate</button>
+            </div>
+            
+            <div id="sizingResults" class="sizing-results"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

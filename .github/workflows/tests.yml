@@ -1,0 +1,31 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r backend/requirements.txt
+    
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 backend/ --count --select=E9,F63,F7,F82 --show-source --statistics
+    
+    - name: Test imports
+      run: |
+        python -c "from backend.data_collection import REGIONS; print(f'Loaded {len(REGIONS)} regions')"
+        python -c "from backend.awg_analyzer import AWGSuitabilityAnalyzer; print('AWG Analyzer imported successfully')"
+        python -c "from backend.ml_predictor import AWGWaterProductionPredictor; print('ML Predictor imported successfully')"
