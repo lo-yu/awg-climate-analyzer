@@ -328,7 +328,7 @@ export default function App() {
               <StatCard label="HUMIDITY" value={weather.relative_humidity_pct} unit="%" sub={`Dew pt: ${weather.dew_point_c}°C`} accent="#22c55e" />
               <StatCard label="PRESSURE" value={weather.pressure_hpa} unit=" hPa" sub={`Wind: ${weather.wind_speed_ms} m/s`} accent="#a78bfa" />
               <StatCard label="ABS. HUMIDITY" value={psychro.absolute_humidity_g_m3} unit=" g/m³" sub="Moisture content" accent="#06b6d4" />
-              <StatCard label="WATER VAPOR" value={extraction.water_vapor_grams_per_hour} unit=" g/hr" sub="At 500m³/hr airflow" accent="#f59e0b" />
+              <StatCard label="WATER VAPOR" value={(extraction.water_vapor_grams_per_hour / 1000).toFixed(2)} unit=" L/hr" sub="At 500m³/hr airflow" accent="#f59e0b" />
               <StatCard label="EXTRACTED" value={extraction.extracted_liters_per_hour} unit=" L/hr" sub="At 40% efficiency" accent="#06b6d4" />
             </div>
 
